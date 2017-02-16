@@ -102,7 +102,7 @@ public class CitizenWebController {
         if (errorMsg != null) {
             model.addAttribute("error" , errorMsg);
             session.removeAttribute("error");}
-        return "/login";
+        return "login";
     }
 
 //    @RequestMapping(path = "/address", method = RequestMethod.POST)
@@ -200,7 +200,7 @@ public class CitizenWebController {
         if (errorMsg != null) {
             model.addAttribute("error" , errorMsg);
             session.removeAttribute("error");}
-        return "/create-account";
+        return "create-account";
     }
 
     @RequestMapping(path = "/create-account", method = RequestMethod.POST)
@@ -246,7 +246,7 @@ public class CitizenWebController {
 //        List<User> userEntities = users.findAllByOrderByVenue(venue);
 //        model.addAttribute("meetings", meetingEntities);
 //        model.addAttribute("users", userEntities);
-        return "/venue";
+        return "venue";
     }//end of "viewVenue" route
 
     @RequestMapping(path = "/create-venue", method = RequestMethod.GET)
@@ -258,7 +258,7 @@ public class CitizenWebController {
             model.addAttribute("error", errorMsg);
             session.removeAttribute("error");
         }
-        return "/create-venue";
+        return "create-venue";
     }
 
     @RequestMapping(path = "/create-venue", method = RequestMethod.POST)
@@ -310,7 +310,7 @@ public class CitizenWebController {
             model.addAttribute("isOrganizer", isOrganizer);
             }
 //        model.addAttribute("users", userEntities);
-        return "/meeting";
+        return "meeting";
     }//end of "viewVenue" route
 
     @RequestMapping(path = "/create-meeting", method = RequestMethod.GET)
@@ -322,7 +322,7 @@ public class CitizenWebController {
             model.addAttribute("error", errorMsg);
             session.removeAttribute("error");
         }
-        return "/create-meeting";
+        return "create-meeting";
     }
 
     @RequestMapping(path = "/create-meeting", method = RequestMethod.POST)
