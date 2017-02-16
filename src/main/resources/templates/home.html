@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Citzenweb Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+<div class="container">
+{{^user}}
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create-account">Create Account</a>
+                </li>
+            </ul>
+        </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+{{/user}}
+{{#user}}
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create-meeting">Create New Meeting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create-venue">Create New Venue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>Welcome back, {{family}}</h4>
+    </div>
+{{/user}}
+{{#error}}{{.}}{{/error}}
+ {{^address}}
+    <div class="jumbotron">
+        <h2 class="display-3">Get Involved...</h2>
+        <p>Be present for the decisions that effect your home.</p>
+        <p>
+        <form >
+            <div class="form-group">
+                <input type="text" class="form-control" id="address" name="address" aria-describedby="addressHelp" placeholder="Enter address" required>
+                <button action="/address" method="post" class="btn btn-lg btn-success" type="submit">See your local civic engagements</button>
+            </div>
+        </form>
+        </p>
+    </div>
+ {{/address}}
+ {{#address}}
+    <div class="jumbotron">
+        {{.}}
+        <p>Welcome! Logan Park is your neighborhood.</p>
+        <a href="/">Clear Filters</a>
+        <form action="/" method="post">
+            <select name="venue">
+                <option selected disabled>Venue</option>
+                {{#venues}}
+                <option value="{{name}}">{{name}}</option>
+                {{/venues}}
+            </select>
+            <select name="organizer">
+                <option selected disabled>Organizer</option>
+                {{#organizers}}
+                <option value="{{name}}">{{name}}</option>
+                {{/organizers}}
+            </select>
+            <!--<select name="week">-->
+                <!--<option selected disabled>Dates</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">This week</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Next week</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Two weeks out</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Later</option>-->
+            <!--</select>-->
+            <button type="submit">Filter</button>
+        </form>
+        <br>
+        <form action="/" method="get">
+            <input type="text" placeholder="Search Meetings" name="search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+  {{/address}}
+{{#address}}
+    <div class="row marketing">
+        <div class="col-lg-12">
+            <h4>Meetings in your area:</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Meeting Name</th>
+                    <th>Start Time</th>
+                    <th>description</th>
+                    <th>Venue</th>
+                    <th>Organizer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#meetings}}
+                <tr>
+                    <td><a href="/meeting?meetingId={{#meetingId}}{{.}}{{/meetingId}}">{{#name}}{{.}}{{/name}}</a></td>
+                    <td>{{#startTime}}{{.}}{{/startTime}}</td>
+                    <td>{{#description}}{{.}}{{/description}}</td>
+                    <td>{{#venueId}}<a href="/venue?venueId={{.}}">View Venue</a>{{/venueId}}</td>
+                    <td>{{#organizerId}}<a href="/user?userId={{.}}">View Organizer</a>{{/organizerId}}</td>
+                </tr>
+                {{/meetings}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{{/address}}
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="home.js"></script>
+</body>
+</html>

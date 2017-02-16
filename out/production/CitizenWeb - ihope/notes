@@ -1,0 +1,127 @@
+{{#user}}
+        <form action="/delete-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <button>Delete!</button>
+        </form>
+        <form action="/edit-thought" method="post">
+            <input type="hidden" value="{{thoughtId}}" name="thoughtId">
+            <input type="text" placeholder="Enter Replacement Description" name="descriptionText" size="50">
+            <button type="submit">Update!</button>
+        </form>
+        {{/user}}
+
+        <br><br>
+        <form action="/add-thought" method="post">
+            <input type="text" placeholder="Description" name="descriptionText" size="50"/>
+            <select name="thoughtCategory">
+                <option selected disabled>Category</option>
+                <option value="charity">Charity</option>
+                <option value="community">Community</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="faith">Faith</option>
+                <option value="family">Family</option>
+                <option value="freedom">Freedom</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="marriage">Marriage</option>
+                <option value="money">Money</option>
+                <option value="parenting">Parenting</option>
+                <option value="tools">Tools</option>
+                <option value="training">Training</option>
+                <option value="vocation">Vocation</option>
+            </select>
+            <input type="datetime-local" name="dateTime" value="{{now}}"/>
+            <button type="submit">Detain Thought!</button>
+
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+
+                    <nav>
+                        <ul class="nav nav-pills float-right">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">All</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Meetings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Venues</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Organizers</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div class="form-group">
+                                    <label for="exampleSelect1">Favorite Food</label>
+                                    <select class="form-control" id="exampleSelect1">
+                                        <option>Pasta</option>
+                                        <option>Sushi</option>
+                                        <option>Beans</option>
+                                        <option>BBQ</option>
+                                        <option>FOOD</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea">Describe a time you performed magic</label>
+                                    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input">
+                                        I agree to the EULA
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+
+                                <div class="registration">
+                                        <h4>Register today</h4>
+
+                                    </div>
+
+                                    <nav>
+                                                <ul class="nav nav-pills float-right">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="#">Sign in</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+
+
+
+                                    to move to url button role="button" href="link"
+
+  <br><br>
+Welcome{{#user}}, {{name}}!!!
+<br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br>{{/user}}
+Something about the tool
+<br><br>
+Something else
+{{^user}}
+<form action="login" method="post">
+    <input type="text" placeholder="userName" name="userName" required>
+    <input type="password" placeholder="Password" name="password" required>
+    <button type="submit">Login</button>
+</form>
+{{/user}}
+<br>
+
+
+//    @RequestMapping(path = "/login-organizer", method = RequestMethod.POST)
+//    public String loginOrganizer(HttpSession session, String userName, String password) throws Exception {
+//        Organizer organizer = organizers.findFirstByName(userName);
+//        if (organizer == null) {
+//            throw new   Exception("No such organizer exists, please create an account");
+//        }else if (!PasswordStorage.verifyPassword(password, organizer.password)){
+//            throw new   Exception("Incorrect Password");
+//        } else
+//            session.setAttribute("user", organizer);
+//            session.setAttribute("userName", userName);
+//        return "redirect:/";
+//    }// end of login method
+

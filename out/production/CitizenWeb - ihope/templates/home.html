@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Citzenweb</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="header clearfix">
+        {{^user}}
+        <form action="login" method="post">
+            <input type="text" placeholder="userName" name="userName" required>
+            <input type="password" placeholder="Password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        {{/user}}
+        {{#user}}
+        {{name}}
+        <form action="/logout" method="post">
+            <button type="submit">Logout</button>
+        </form>
+        {{/user}}
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+    <div class="jumbotron">
+        {{^address}}
+        <h2 class="display-3">Get Involved...</h2>
+        <p>Be present for the decisions that effect your home.</p>
+        <p>
+        <form>
+            <div class="form-group">
+                <input type="address" class="form-control" id="input-address" aria-describedby="addressHelp" placeholder="Enter address">
+                <input type="email" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted"> We'll never share your information with anyone else.</small>
+            </div>
+        </form>
+            <a class="btn btn-lg btn-success" type="submit">See your councils</a>
+        </p>
+        {{/address}}
+        <p>Welcome! Logan Park is your neighborhood.</p>
+        <a href="/">Clear Filters</a>
+        <form action="/" method="post">
+            <select name="venue">
+                <option selected disabled>Venue</option>
+                {{#venues}}
+                <option value="{{name}}">{{name}}</option>
+                {{/venues}}
+            </select>
+            <select name="organizer">
+                <option selected disabled>Organizer</option>
+                {{#organizers}}
+                <option value="{{name}}">{{name}}</option>
+                {{/organizers}}
+            </select>
+            <select name="week">
+                <option selected disabled>Dates</option>
+                <option value="get t from Meeting where t.localDateTime is ..">This week</option>
+                <option value="get t from Meeting where t.localDateTime is ..">Next week</option>
+                <option value="get t from Meeting where t.localDateTime is ..">Two weeks out</option>
+                <option value="get t from Meeting where t.localDateTime is ..">Later</option>
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+        <br>
+        <form action="/" method="get">
+            <input type="text" placeholder="Search Meetings" name="search">
+            <button type="submit">Search</button>
+        </form>
+        {{#address}}
+    </div>
+</div>
+{{#address}}
+<ol>
+    {{#meetings}}
+    <li>
+        ||_MEETING:__{{name}}__||_DATE.TIME:__{{dateTime}}__||_VENUE:__{{venue.name}}__||
+        ||_DESCRIPTION:__{{description}}__||
+        {{#user}}
+        <form action="/meeting-notes" method="post">
+            <input type="hidden" value="{{meetingId}}" name="meetingId">
+            <input type="text" placeholder="Enter Meeting Notes" name="noteText" size="50">
+            <button type="submit">Add Meeting Notes</button>
+        </form>
+        <form action="/rsvp-meeting" method="post">
+            <input type="hidden" value="{{meetingId}}" name="meetingId">
+            <button>Attend Meeting!</button>
+        </form>
+        <form action="/hide-meeting" method="post">
+            <input type="hidden" value="{{meetingId}}" name="meetingId">
+            <button>Hide Meeting!</button>
+            <br><br>
+        </form>
+        {{/user}}
+    </li>
+    {{/meetings}}
+</ol>
+{{/address}}
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="home.js"></script>
+</body>
+</html>
