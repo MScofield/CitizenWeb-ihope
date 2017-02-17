@@ -8,21 +8,21 @@
 </head>
 <body>
 <div class="container">
-{{#user}}
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills float-right">
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
-                </li>
                 {{#venue}}
                 <li class="nav-item">
                     <a class="nav-link active" href="/venue?venueId={{venueId}}">View Venue</a>
                 </li>
                 {{/venue}}
+                {{#user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/create-meeting">Create New Meeting</a>
                 </li>
@@ -32,11 +32,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
+                {{/user}}
             </ul>
         </nav>
         <h3 class="text-energy">CitizenWeb</h3><h4>Individual Venue View:</h4>
     </div>
- {{/user}}
     {{#error}}{{.}}{{/error}}
 {{#venue}}
     <div class="jumbotron">

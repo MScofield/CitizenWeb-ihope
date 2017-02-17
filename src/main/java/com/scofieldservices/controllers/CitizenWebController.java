@@ -178,16 +178,17 @@ public class CitizenWebController {
         User user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
         System.out.println("userId coming in to /user route" + userId);
-        if (userId != null){
-        User userToView = users.findOne(userId);
+        if (userId != null) {
+            User userToView = users.findOne(userId);
 //        List<Meeting> meetingEntities = meetings.findAllByOrderByUser(userToView);
 //        List<Venue> venueEntities = venues.findAllByOrderByUser(userToView);
-        model.addAttribute("userToView", userToView);
+            model.addAttribute("userToView", userToView);
 //        model.addAttribute("meetings", meetingEntities);
 //        model.addAttribute("venues", venueEntities);
-        if (user.getUserId() == userId) {
-            boolean isOwner = true;
-            model.addAttribute("isOwner", isOwner);}
+            if (user.getUserId() == userId) {
+                boolean isOwner = true;
+                model.addAttribute("isOwner", isOwner);
+            }
         }
         return "user";
     }//end of "viewUser" route
@@ -236,11 +237,13 @@ public class CitizenWebController {
         Integer ownerId = venue.getOwnerId();
         User organizer = users.findOne(ownerId);
         model.addAttribute("organizer", organizer);
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
-        if (user.getUserId() == ownerId) {
-            Boolean isOwner = true;
-            model.addAttribute("isOwner", isOwner);
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
+            if (user.getUserId() == ownerId) {
+                Boolean isOwner = true;
+                model.addAttribute("isOwner", isOwner);
+            }
         }
 //        List<Meeting> meetingEntities = meetings.findAllByOrderByVenueId(venueId);
 //        List<User> userEntities = users.findAllByOrderByVenue(venue);
@@ -288,8 +291,6 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/meeting", method = RequestMethod.GET)
     public String viewMeeting (Model model, HttpSession session, Integer meetingId) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
         Meeting meeting = meetings.findOne(meetingId);
         model.addAttribute("meeting", meeting);
         LocalDate date = meeting.getStartTime().toLocalDate();
@@ -298,17 +299,21 @@ public class CitizenWebController {
         model.addAttribute("time", time);
         Integer minutes =
                 ((meeting.getEndTime().toLocalTime()).compareTo(meeting.getStartTime().toLocalTime()));
-        model.addAttribute(minutes);
+        model.addAttribute("minutes", minutes);
         if (meeting.getVenueId() != null) {
             Venue venue = venues.findOne(meeting.getVenueId());
             model.addAttribute("venue", venue);}
+        if (session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            model.addAttribute("user", user);
 //        List<User> userEntities = users.findAllByOrderByMeeting(meeting);
             User organizer = users.findOne(meeting.getOrganizerId());
             model.addAttribute("organizer", organizer);
-        if (user.getUserId() == meeting.getOrganizerId()) {
-            Boolean isOrganizer = true;
-            model.addAttribute("isOrganizer", isOrganizer);
+            if (user.getUserId() == meeting.getOrganizerId()) {
+                Boolean isOrganizer = true;
+                model.addAttribute("isOrganizer", isOrganizer);
             }
+        }
 //        model.addAttribute("users", userEntities);
         return "meeting";
     }//end of "viewVenue" route
@@ -342,25 +347,18 @@ public class CitizenWebController {
 //        String gplaceId = geo.getGplaceId();
 //        Venue venue = venues.findOne(venueId);
                 if (venueId == null) {
-                    try {
                         Venue venue = venues.findFirstByAddress(standardizedAddress);
                         Integer foundVenueId = venue.getVenueId();
                         Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
                                 description, url, photo, organizerId, foundVenueId);
                         meetings.save(meeting);
-                    } catch (Exception e) {
-                    }
-                } else if (venueId != null) {
-                    try {
-                        Integer foundVenueId = venues.findFirstByAddress(standardizedAddress).getVenueId();
-                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
-                                description, url, photo, organizerId, foundVenueId);
-                        meetings.save(meeting);
-                    } catch (Exception e) {
-                    }
+//                } else if (venueId != null) {
+//                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
+//                                description, url, photo, organizerId, venueId);
+//                        meetings.save(meeting);
                 } else {
-                    Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite, description, url, photo, organizerId);
-                    meetings.save(meeting);
+                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite, description, url, photo, organizerId);
+                        meetings.save(meeting);
                 }
             }catch (Exception e) {}
         } else {

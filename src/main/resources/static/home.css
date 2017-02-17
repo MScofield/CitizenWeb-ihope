@@ -30,9 +30,19 @@ input[type="text"] {
     margin: 10px;
 }
 
+input[type="datetime-local"] {
+    margin: 10px;
+}
+
+
+
 a.btn.btn-success {
     padding: 20px;
     color: white;
+}
+
+a.btn.btn-primary {
+    margin: 10px;
 }
 
 .registration {
