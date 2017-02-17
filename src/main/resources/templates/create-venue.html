@@ -45,21 +45,28 @@
     {{#error}}{{.}}{{/error}}
     {{#user}}
     <div class="registration">
-    The first two fields are required!
+        <h4>The first two fields are required!</h4>
         <form action="/create-venue" method="post">
             <div class="form-group">
-                <input type="text" placeholder="Venue Name" name="venueName" required><br>
-                <input type="text" placeholder="Full Street Address" name="address" required><br>
-                <input type="text" placeholder="Building Name" name="buildingName"><br>
-                <input type="text" placeholder="Suite Number" name="suite"><br>
-                <input type="text" placeholder="Open Hours" name="hours"><br>
-                <input type="text" placeholder="Venue Website" name="website"><br>
-                <input type="text" placeholder="Venue Facebook Page" name="facebook"><br>
-                <input type="text" placeholder="Venue Twitter Handle" name="twitter"><br>
-                <input type="file" placeholder="Upload Photo" name="photo"><br>
-                <input type="hidden" value={{userId}} name="ownerId">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <input type="text" placeholder="Venue Name" name="venueName" required><br>
+                        <input type="text" placeholder="Full Street Address" name="address" required><br>
+                        <input type="text" placeholder="Building Name" name="buildingName"><br>
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="text" placeholder="Suite Number" name="suite"><br>
+                        <input type="text" placeholder="Open Hours" name="hours"><br>
+                        <input type="text" placeholder="Venue Website" name="website"><br>
+                    </div>
+                    <div class="col-lg-4">
+                        <input type="text" placeholder="Venue Facebook Page" name="facebook"><br>
+                        <input type="text" placeholder="Venue Twitter Handle" name="twitter"><br>
+                        <input type="hidden" value={{userId}} name="ownerId">
+                        <button type="submit" class="btn btn-primary">Save Venue</button>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Save Venue</button>
         </form>
     </div>
     {{/user}}

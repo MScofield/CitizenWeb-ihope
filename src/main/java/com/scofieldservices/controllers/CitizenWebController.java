@@ -189,7 +189,7 @@ public class CitizenWebController {
             boolean isOwner = true;
             model.addAttribute("isOwner", isOwner);}
         }
-        return "/user";
+        return "user";
     }//end of "viewUser" route
 
     @RequestMapping(path = "/create-account", method = RequestMethod.GET)

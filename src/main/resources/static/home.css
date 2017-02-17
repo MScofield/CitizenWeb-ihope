@@ -21,6 +21,15 @@ h3.text-energy {
     border-bottom: solid #b3b3ff;
 }
 
+.form-control {
+    width: 50%;
+    margin: 20px auto;
+}
+
+input[type="text"] {
+    margin: 10px;
+}
+
 a.btn.btn-success {
     padding: 20px;
     color: white;
