@@ -50,13 +50,13 @@
             <li>Website: {{#url}}{{.}}{{/url}}</li>
             <li>Twitter: {{#twitter}}{{.}}{{/twitter}}</li>
         </ul>
-        {{/userToView}}
         {{#isOwner}}
         <form action="/delete-user" method="post">
-           {{#user}}{{userId}} <input type="hidden" value="{{.}}" name="userId">{{/userId}}{{/user}}
+           {{#userId}} <input type="hidden" value="{{.}}" name="userId">{{/userId}}
             <button type="submit">Delete Account</button>
         </form>
         {{/isOwner}}
+        {{/userToView}}
     </div>
 </div>
 
