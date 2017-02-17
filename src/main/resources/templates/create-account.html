@@ -8,33 +8,51 @@
 </head>
 <body>
 <div class="container">
+    {{^user}}
+        <div class="header clearfix">
+            <nav>
+                <ul class="nav nav-pills float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/create-account">Create Account</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-energy">CitizenWeb</h3><h4>Create an Account</h4>
+        </div>
+    {{/user}}
+    {{#user}}
     <div class="header clearfix">
         <nav>
             <ul class="nav nav-pills float-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                {{#user}}
-                <li class="nav-item">
                     <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/create-meeting">Create New Meeting</a>
+                    <a class="nav-link " href="/create-meeting">Create New Meeting</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/create-venue">Create New Venue</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="/create-account">Create Account</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
-                {{/user}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Create an account</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4> Your are logged in as {{#userName}}{{.}}{{/userName}}.  Create a user account for someone else:</h4>
     </div>
+    {{/user}}
     {{#error}}{{.}}{{/error}}
     <div class="registration">
-        <h4>The first three fields are required!</h4>
+        <p>The first three fields userName, password, address are required!</p>
         <form action="/create-account" method="post">
             <div class="form-group">
                 <p id="emailHelp" class="form-text text-muted">We'll never share your info with anyone else.</p>

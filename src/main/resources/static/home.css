@@ -23,17 +23,23 @@ h3.text-energy {
 
 .form-control {
     width: 50%;
-    margin: 20px auto;
+    margin-bottom: 20px;
+    margin-left: 25%;
+    margin-right: 25%;
+    text-align: center;
 }
 
 input[type="text"] {
     margin: 10px;
 }
 
+input[type="text2"] {
+
+}
+
 input[type="datetime-local"] {
     margin: 10px;
 }
-
 
 
 a.btn.btn-success {
