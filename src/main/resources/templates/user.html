@@ -53,10 +53,10 @@
         {{/userToView}}
         {{#isOwner}}
         <form action="/delete-user" method="post">
-            <input type="hidden" value="{{userId}}" name="userId">
+           {{#user}}{{userId}} <input type="hidden" value="{{.}}" name="userId">{{/userId}}{{/user}}
             <button type="submit">Delete Account</button>
         </form>
-    {{/isOwner}}
+        {{/isOwner}}
     </div>
 </div>
 
