@@ -119,7 +119,7 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public String logoutPage(){
-        return "/logout";
+        return "logout";
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
