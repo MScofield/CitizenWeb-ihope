@@ -34,7 +34,7 @@
                     <a class="nav-link active" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+                    {{#userId}}<a class="nav-link" href="/user?userId={{.}}">My Profile</a>{{/userId}}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/create-meeting">Create New Meeting</a>
@@ -117,7 +117,7 @@
                 {{#meetings}}
                 <tr>
                     <td><a href="/meeting?meetingId={{#meetingId}}{{.}}{{/meetingId}}">{{#name}}{{.}}{{/name}}</a></td>
-                    <td>{{#startTime}}{{.}}{{/startTime}}</td>
+                    <td>{{#time}}{{.}}{{/time}}</td>
                     <td>{{#description}}{{.}}{{/description}}</td>
                     <td>{{#venueId}}<a href="/venue?venueId={{.}}">View Venue</a>{{/venueId}}</td>
                     <td>{{#organizerId}}<a href="/user?userId={{.}}">View Organizer</a>{{/organizerId}}</td>
