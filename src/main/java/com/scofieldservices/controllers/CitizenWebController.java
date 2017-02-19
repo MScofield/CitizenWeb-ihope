@@ -346,12 +346,13 @@ public class CitizenWebController {
 //        double longitude = geo.getLongitude();
 //        String gplaceId = geo.getGplaceId();
 //        Venue venue = venues.findOne(venueId);
-                if (venueId == null) {
-                        Venue venue = venues.findFirstByAddress(standardizedAddress);
-                        Integer foundVenueId = venue.getVenueId();
-                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
-                                description, url, photo, organizerId, foundVenueId);
-                        meetings.save(meeting);
+                if (venueId == null) { try {
+                    Venue venue = venues.findFirstByAddress(standardizedAddress);
+                    Integer foundVenueId = venue.getVenueId();
+                    Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
+                            description, url, photo, organizerId, foundVenueId);
+                    meetings.save(meeting);
+                } catch (Exception e) {}
 //                } else if (venueId != null) {
 //                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
 //                                description, url, photo, organizerId, venueId);
