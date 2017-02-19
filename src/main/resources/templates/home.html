@@ -64,24 +64,23 @@
         </form>
     </div>
  {{/address}}
- {{#address}}
     <div class="jumbotron">
+        {{#address}}
         {{.}}
-        <p>Welcome! Logan Park is your neighborhood.</p>
-        <a href="/">Clear Filters</a>
-        <form action="/" method="post">
-            <select name="venue">
-                <option selected disabled>Venue</option>
-                {{#venues}}
-                <option value="{{name}}">{{name}}</option>
-                {{/venues}}
-            </select>
-            <select name="organizer">
-                <option selected disabled>Organizer</option>
-                {{#organizers}}
-                <option value="{{name}}">{{name}}</option>
-                {{/organizers}}
-            </select>
+        <a href="/">Clear Address</a>
+        <!--<form action="/" method="post">-->
+            <!--<select name="venue">-->
+                <!--<option selected disabled>Venue</option>-->
+                <!--{{#venues}}-->
+                <!--<option value="{{name}}">{{name}}</option>-->
+                <!--{{/venues}}-->
+            <!--</select>-->
+            <!--<select name="organizer">-->
+                <!--<option selected disabled>Organizer</option>-->
+                <!--{{#organizers}}-->
+                <!--<option value="{{name}}">{{name}}</option>-->
+                <!--{{/organizers}}-->
+            <!--</select>-->
             <!--<select name="week">-->
                 <!--<option selected disabled>Dates</option>-->
                 <!--<option value="get t from Meeting where t.localDateTime is ..">This week</option>-->
@@ -89,15 +88,15 @@
                 <!--<option value="get t from Meeting where t.localDateTime is ..">Two weeks out</option>-->
                 <!--<option value="get t from Meeting where t.localDateTime is ..">Later</option>-->
             <!--</select>-->
-            <button type="submit">Filter</button>
-        </form>
-        <br>
-        <form action="/" method="get">
-            <input type="text" placeholder="Search Meetings" name="search">
-            <button type="submit">Search</button>
-        </form>
+            <!--<button type="submit">Filter</button>-->
+        <!--</form>-->
+        <!--<br>-->
+        <!--<form action="/" method="get">-->
+            <!--<input type="text" placeholder="Search Meetings" name="search">-->
+            <!--<button type="submit">Search</button>-->
+        <!--</form>-->
+        {{/address}}
     </div>
-  {{/address}}
 {{#address}}
     <div class="row marketing">
         <div class="col-lg-12">
