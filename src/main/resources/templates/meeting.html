@@ -48,13 +48,13 @@
             {{#venue}}{{#name}}{{.}}{{/name}}{{/venue}}</p><br>
         {{#meeting}}
         <ul style="list-style-type:none">
-            <li>est Duration:  {{#minutes}}{{.}}{{/minutes}}</li>
-            <li>Address: {{#address}}{{.}}{{/address}}{{#suite}}-#-{{.}}{{/suite}}</li>
-            <li>Facebook: {{#facebook}}{{.}}{{/facebook}}</li>
-            <li>Website: {{#url}}{{.}}{{/url}}</li>
-            <li>Twitter: {{#twitter}}{{.}}{{/twitter}}</li>
-            <li>Organizer family:  {{#organizer}}{{#family}}{{.}}{{/family}}{{/organizer}}</li>
-            <li>Organizer email:   {{#organizer}}{{#email}}{{.}}{{/email}}{{/organizer}}</li>
+            <li>{{#minutes}}est Duration (experimental:  {{.}}{{/minutes}}</li>
+            <li>{{#address}}Address: {{.}}{{/address}}{{#suite}}-#-{{.}}{{/suite}}</li>
+            <li>{{#facebook}}Facebook: {{.}}{{/facebook}}</li>
+            <li>{{#url}}Website: {{.}}{{/url}}</li>
+            <li>{{#twitter}}Twitter: {{.}}{{/twitter}}</li>
+            <li>{{#organizer}}Organizer family:  {{#family}}{{.}}{{/family}}{{/organizer}}</li>
+            <li>{{#organizer}}Organizer email:   {{#email}}{{.}}{{/email}}{{/organizer}}</li>
         </ul>
         {{#isOrganizer}}
             <form action="/delete-meeting" method="post">
