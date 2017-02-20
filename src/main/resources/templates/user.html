@@ -32,23 +32,25 @@
                 {{/user}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Individual User View for {{#userToView}}{{#userName}}{{.}}{{/userName}}{{/userToView}}:</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>Individual User View for Username: {{#userToView}}{{#userName}}{{.}}{{/userName}}{{/userToView}}.</h4>
     </div>
     {{#error}}{{.}}{{/error}}
+    {{#userToView}}
     <div class="jumbotron">
         <h2 class="display-3">User info for:</h2>
-        {{#userToView}}
-        <p id="loginHelp" class="form-text text-muted">
-            {{#family}}{{.}}{{/family}},<br>
-            {{#firstName}}{{.}}{{/firstName}},<br>
-            {{#familyMembers}}{{.}}{{/familyMembers}}</p><br>
         <ul style="list-style-type:none">
-            <li>{{#phone}}Phone: {{.}}{{/phone}}</li>
-            <li>{{#email}}Email: {{.}}{{/email}}</li>
-            <li>{{#address}}Address: {{.}}{{/address}}-#-{{#suite}}{{.}}{{/suite}}</li>
-            <li>{{#facebook}}Facebook: {{.}}{{/facebook}}</li>
-            <li>{{#url}}Website: {{.}}{{/url}}</li>
-            <li>{{#twitter}}Twitter: {{.}}{{/twitter}}</li>
+            {{#family}}<li>Family: {{.}}</li>{{/family}}
+            {{#firstName}}<Li>Name: {{.}}</Li>{{/firstName}}
+            {{#familyMembers}}<Li>More:  {{.}}</Li>{{/familyMembers}}
+        </ul><br>
+        <ul style="list-style-type:none">
+            {{#phone}}<li>Phone: {{.}}</li>{{/phone}}
+            {{#email}}<li>Email: {{.}}</li>{{/email}}
+            {{#address}}<li>Address: {{.}}</li>{{/address}}
+            {{#suite}}<li>Suite: {{.}}</li>{{/suite}}
+            {{#facebook}}<li>Facebook: {{.}}</li>{{/facebook}}
+            {{#url}}<li>Website: {{.}}</li>{{/url}}
+            {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
         </ul>
         {{#isOwner}}
         <form action="/delete-user" method="post">
@@ -56,8 +58,8 @@
             <button type="submit">Delete Account</button>
         </form>
         {{/isOwner}}
-        {{/userToView}}
     </div>
+    {{/userToView}}
 </div>
 
 

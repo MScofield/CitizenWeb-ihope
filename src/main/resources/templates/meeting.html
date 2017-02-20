@@ -37,24 +37,22 @@
     </nav>
     </div>
 {{#error}}{{.}}{{/error}}
+    {{#meeting}}
     <div class="jumbotron">
         <h2 class="display-3">show meeting info for:</h2>
-        <p id="loginHelp" class="form-text text-muted">
-            {{#meeting}}
-            {{#name}}{{.}}{{/name}}<br>
-            {{#date}}{{.}}{{/date}}<br>
-            {{#time}}{{.}}{{/time}}<br>
-            {{/meeting}}
-            {{#venue}}{{#name}}{{.}}{{/name}}{{/venue}}</p><br>
-        {{#meeting}}
         <ul style="list-style-type:none">
-            <li>{{#minutes}}est Duration (experimental:  {{.}}{{/minutes}}</li>
-            <li>{{#address}}Address: {{.}}{{/address}}{{#suite}}-#-{{.}}{{/suite}}</li>
-            <li>{{#facebook}}Facebook: {{.}}{{/facebook}}</li>
-            <li>{{#url}}Website: {{.}}{{/url}}</li>
-            <li>{{#twitter}}Twitter: {{.}}{{/twitter}}</li>
-            <li>{{#organizer}}Organizer family:  {{#family}}{{.}}{{/family}}{{/organizer}}</li>
-            <li>{{#organizer}}Organizer email:   {{#email}}{{.}}{{/email}}{{/organizer}}</li>
+            {{#name}}<Li>Meeting Name:  {{.}}</Li>{{/name}}
+            {{#date}}<Li>Meeting Date:  {{.}}</Li>{{/date}}
+            {{#time}}<Li>Meeting Time:  {{.}}</Li>{{/time}}
+        </ul><br>
+        <ul style="list-style-type:none">
+            {{#address}}<li>Address: {{.}}</li>{{/address}}
+            {{#suite}}<Li>Suite:    {{.}}</li>{{/suite}}
+            {{#facebook}}<li>Facebook: {{.}}</li>{{/facebook}}
+            {{#url}}<li>Website: {{.}}</li>{{/url}}
+            {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
+            {{#organizer}}<li>Organizer name:  {{#userName}}{{.}}{{/userName}}</li>{{/organizer}}
+            {{#organizer}}<li>Organizer email:   {{#email}}{{.}}{{/email}}</li>{{/organizer}}
         </ul>
         {{#isOrganizer}}
             <form action="/delete-meeting" method="post">
@@ -62,8 +60,8 @@
                 <button type="submit" class="btn btn-primary">Delete Meeting</button>
             </form>
         {{/isOrganizer}}
-        {{/meeting}}
     </div>
+    {{/meeting}}
 </div>
 
 

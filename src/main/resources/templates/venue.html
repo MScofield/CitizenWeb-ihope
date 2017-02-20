@@ -38,21 +38,22 @@
         <h3 class="text-energy">CitizenWeb</h3><h4>Individual Venue View:</h4>
     </div>
     {{#error}}{{.}}{{/error}}
-{{#venue}}
+    {{#venue}}
     <div class="jumbotron">
     <h2 class="display-3">show venue info for:</h2>
-    <p id="loginHelp" class="form-text text-muted">
-        {{#venueName}}{{.}}{{/venueName}}<br>
-        {{#buildingName}}{{.}}{{/buildingName}}<br>
-        {{#suite}}#{{.}}{{/suite}}</p><br>
     <ul style="list-style-type:none">
-        <li>{{#openHours}}Hours:  {{.}}{{/openHours}}</li>
-        <li>{{#address}}Address: {{.}}{{/address}}{{#suite}}-#-{{.}}{{/suite}}</li>
-        <li>{{#facebook}}Facebook: {{.}}{{/facebook}}</li>
-        <li>{{#url}}Website: {{.}}{{/url}}</li>
-        <li>{{#twitter}}Twitter: {{.}}{{/twitter}}</li>
-        <li>{{#organizer}}Owner family:  {{#family}}{{.}}{{/family}}{{/organizer}}</li>
-        <li>{{#organizer}}Owner email:   {{#email}}{{.}}{{/email}}{{/organizer}}</li>
+        {{#venueName}}<li>Venue Name:   {{.}}</li>{{/venueName}}
+        {{#buildingName}}<li>Building Name: {{.}}</li>{{/buildingName}}
+    </ul><br>
+    <ul style="list-style-type:none">
+        {{#openHours}}<li>Hours:    {{.}}</li>{{/openHours}}
+        {{#address}}<li>Address:    {{.}}</li>{{/address}}
+        {{#suite}}<li>Suite:    {{.}}</li>{{/suite}}
+        {{#facebook}}<li>Facebook:  {{.}}</li>{{/facebook}}
+        {{#url}}<li>Website:    {{.}}</li>{{/url}}
+        {{#twitter}}<li>Twitter:    {{.}}</li>{{/twitter}}
+        {{#organizer}}<li>Owner name:   {{#userName}}{{.}}{{/userName}}</li>{{/organizer}}
+        {{#organizer}}<li>Owner email:  {{#email}}{{.}}{{/email}}</li>{{/organizer}}
     </ul>
     {{#isOwner}}
         <form action="/delete-venue" method="post">
@@ -61,7 +62,7 @@
         </form>
     {{/isOwner}}
     </div>
-{{/venue}}
+    {{/venue}}
 </div>
 
 
