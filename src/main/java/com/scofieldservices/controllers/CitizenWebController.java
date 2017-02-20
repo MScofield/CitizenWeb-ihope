@@ -85,14 +85,16 @@ public class CitizenWebController {
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String loginUser(HttpSession session, String userName, String password) throws Exception {
         User user = users.findFirstByUserName(userName);
-        if (user == null) {
+        Integer userId = user.getUserId();
+        if (userId == null) {
             session.setAttribute("error", "No such user exists, please create account");
             return "redirect:/login";
         }else if (!PasswordStorage.verifyPassword(password, user.password)){
             session.setAttribute("error", "Incorrect Password");
             return "redirect:/login";
         } else
-            session.setAttribute("user", user);
+            session.setAttribute("userId", userId);
+            session.removeAttribute("address");
         return "redirect:/";
     }// end of login method
 
@@ -111,14 +113,19 @@ public class CitizenWebController {
 //            throw new Exception("address field cannot be blank");
 //        } else {
 //            Geo geo = addressHandler(address);
-//            session.setAttribute("geo", geo);
+//            session.setAttribute("address", geo.getAddress());
 //            System.out.println("address output from /address route"+" "+geo.getAddress());
 //        }
 //        return "redirect:/";
-//    }// end of login method
+//    }// end of address method
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
-    public String logoutPage(){
+    public String logoutPage(HttpSession session, Model model){
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            User user = users.findOne(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("address", user.getAddress());}
         return "logout";
     }
 
@@ -128,44 +135,67 @@ public class CitizenWebController {
         return "redirect:/";
     }
 
+    @RequestMapping(path = "/clear", method = RequestMethod.GET)
+    public String clearPage(HttpSession session, Model model){
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            User user = users.findOne(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("address", user.getAddress());}
+        return "clear";
+    }
+
+    @RequestMapping(path = "/clear", method = RequestMethod.POST)
+    public String clear(HttpSession session){
+        session.removeAttribute("address");
+        return "redirect:/";
+    }
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String home(Model model, HttpSession session, Integer venueId, Integer organizerId, String address) throws Exception {
-        User user = (User) session.getAttribute("user");
-        Geo geoInput = (Geo) session.getAttribute("geo");
+    public String home(Model model, HttpSession session, String address) throws Exception {
+        Integer userId = (Integer) session.getAttribute("userId");
         String errorMsg = (String) session.getAttribute("error");
+//        model.addAttribute("address", geoInput.getAddress());
+        List<Meeting> meetingEntities;
+//        List<Venue> venueEntities;
+//        List<User> userEntities;
+//        List<User> organizers;
         if (errorMsg != null) {
             model.addAttribute("error" , errorMsg);
             session.removeAttribute("error");}
-//        model.addAttribute("address", geoInput.getAddress());
-        List<Meeting> meetingEntities;
-        List<Venue> venueEntities;
-        List<User> userEntities;
-        List<User> organizers;
-        if (user != null) {
+        if (userId != null) {
+            User user = users.findOne(userId);
             model.addAttribute("user", user);
-            System.out.println("userId from home"+" "+user.getUserId());
-            model.addAttribute("address", user.getAddress());}
+            model.addAttribute("address", user.getAddress());
+        } else if (address != null) { try {
+            Geo geo = addressHandler(address);
+            session.setAttribute("address", geo.getAddress());
+            model.addAttribute ("address", geo.getAddress());}catch (Exception e) {}
+        } else { try {
+            String sessionAddress = (String) session.getAttribute("address");
+            model.addAttribute ("address", sessionAddress);}catch (Exception e) {} }
+
 //        if (venueId != null && organizerId !=null){
 //            Venue venue = venues.findOne(venueId);
 //            User organizer = users.findOne(organizerId);
 //            meetingEntities = meetings.findAllByOrderByVenueIdOrderByOrganizerId(venueId, organizerId);
 //            model.addAttribute("meetings", meetingEntities);
 //        }
-        if (address != null) {
-            String standardizedAddress = addressHandler(address).getAddress();
-            model.addAttribute("address", standardizedAddress);}
-        if (venueId != null) {
-            Venue venue = venues.findOne(venueId);
-            meetingEntities = meetings.findAllByOrderByVenueId(venueId);
-            model.addAttribute("meetings", meetingEntities);}
-        if (organizerId != null) {
-            User organizer = users.findOne(organizerId);
-            meetingEntities = meetings.findAllByOrderByOrganizerId(organizerId);
-            model.addAttribute("meetings", meetingEntities);}
-        else{
+
+//            session.setAttribute("address", geo.getAddress());
+//            model.addAttribute("address", geo.getAddress());}
+//        if (venueId != null) {
+//            Venue venue = venues.findOne(venueId);
+//            meetingEntities = meetings.findAllByOrderByVenueId(venueId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (organizerId != null) {
+//            User organizer = users.findOne(organizerId);
+//            meetingEntities = meetings.findAllByOrderByOrganizerId(organizerId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (session.getAttribute("address") != null || session.getAttribute("user") != null){
             meetingEntities = (List<Meeting>) meetings.findAllByOrderByStartTimeAsc();
             model.addAttribute("meetings", meetingEntities);
-        }
+//        }
 //        venueEntities = venues.findAllByOrderByUser(user);
 //        userEntities = users.findAllByOrderByUser(user);
 //        model.addAttribute("venues", venueEntities);
@@ -175,8 +205,10 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public String viewUser (Model model, HttpSession session, Integer userId) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+        Integer sessionUserId = (Integer) session.getAttribute("userId");
+        if (sessionUserId != null) {
+        User user = users.findOne(sessionUserId);
+        model.addAttribute("user", user);}
         System.out.println("userId coming in to /user route" + userId);
         if (userId != null) {
             User userToView = users.findOne(userId);
@@ -185,7 +217,7 @@ public class CitizenWebController {
             model.addAttribute("userToView", userToView);
 //        model.addAttribute("meetings", meetingEntities);
 //        model.addAttribute("venues", venueEntities);
-            if (user.getUserId() == userId) {
+            if (sessionUserId == userId) {
                 boolean isOwner = true;
                 model.addAttribute("isOwner", isOwner);
             }
@@ -195,8 +227,10 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/create-account", method = RequestMethod.GET)
     public String createAccountPage (Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            User user = users.findOne(userId);
+            model.addAttribute("user", user);}
         String errorMsg = (String) session.getAttribute("error");
         if (errorMsg != null) {
             model.addAttribute("error" , errorMsg);
@@ -226,7 +260,7 @@ public class CitizenWebController {
         }
         User user = users.findFirstByUserName(userName);
         Integer userId = user.getUserId();
-        session.setAttribute("user", user);
+        session.setAttribute("userId", userId);
         return "redirect:/user?userId="+userId;
     }//end of "createUser" route
 
@@ -237,9 +271,10 @@ public class CitizenWebController {
         Integer ownerId = venue.getOwnerId();
         User organizer = users.findOne(ownerId);
         model.addAttribute("organizer", organizer);
-        if (session.getAttribute("user") != null) {
-            User user = (User) session.getAttribute("user");
-            model.addAttribute("user", user);
+        if (session.getAttribute("userId") != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            User user = users.findOne(userId);
+                    model.addAttribute("user", user);
             if (user.getUserId() == ownerId) {
                 Boolean isOwner = true;
                 model.addAttribute("isOwner", isOwner);
@@ -254,8 +289,10 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/create-venue", method = RequestMethod.GET)
     public String createVenuePage (Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            User user = users.findOne(userId);
+            model.addAttribute("user", user);}
         String errorMsg = (String) session.getAttribute("error");
         if (errorMsg != null){
             model.addAttribute("error", errorMsg);
@@ -297,18 +334,21 @@ public class CitizenWebController {
         model.addAttribute("date", date);
         LocalTime time = meeting.getStartTime().toLocalTime().truncatedTo(ChronoUnit.MINUTES);
         model.addAttribute("time", time);
-        Integer minutes =
-                ((meeting.getEndTime().toLocalTime()).compareTo(meeting.getStartTime().toLocalTime()));
-        model.addAttribute("minutes", minutes);
+        if (meeting.getEndTime() != null) {
+            Integer minutes =
+                ((meeting.getEndTime()).compareTo(meeting.getStartTime()));
+            model.addAttribute("minutes", minutes);}
         if (meeting.getVenueId() != null) {
             Venue venue = venues.findOne(meeting.getVenueId());
             model.addAttribute("venue", venue);}
-        if (session.getAttribute("user") != null) {
-            User user = (User) session.getAttribute("user");
+        if (session.getAttribute("userId") != null) {
+            Integer userId = (Integer) session.getAttribute("userId");
+            User user = users.findOne(userId);
             model.addAttribute("user", user);
 //        List<User> userEntities = users.findAllByOrderByMeeting(meeting);
+            try{
             User organizer = users.findOne(meeting.getOrganizerId());
-            model.addAttribute("organizer", organizer);
+            model.addAttribute("organizer", organizer);}catch (Exception e){}
             if (user.getUserId() == meeting.getOrganizerId()) {
                 Boolean isOrganizer = true;
                 model.addAttribute("isOrganizer", isOrganizer);
@@ -320,8 +360,10 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/create-meeting", method = RequestMethod.GET)
     public String createMeetingPage (Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        model.addAttribute("user", user);
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            User user = (User) users.findOne(userId);
+            model.addAttribute("user", user);}
         String errorMsg = (String) session.getAttribute("error");
         if (errorMsg != null) {
             model.addAttribute("error", errorMsg);
@@ -336,7 +378,8 @@ public class CitizenWebController {
             String description, String url, String photo, Integer venueId) throws Exception {
         if(name != null && start != null && address != null) {
             try {
-                User organizer = (User) session.getAttribute("user");
+                Integer userId = (Integer) session.getAttribute("userId");
+                User organizer = (User) users.findOne(userId);
                 Integer organizerId = organizer.getUserId();
                 Geo geo = addressHandler(address);
                 String standardizedAddress = geo.getAddress();
@@ -358,7 +401,8 @@ public class CitizenWebController {
 //                                description, url, photo, organizerId, venueId);
 //                        meetings.save(meeting);
                 } else {
-                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite, description, url, photo, organizerId);
+                        Meeting meeting = new Meeting
+                                (name, startTime, endTime, standardizedAddress, suite, description, url, photo, organizerId);
                         meetings.save(meeting);
                 }
             }catch (Exception e) {}
