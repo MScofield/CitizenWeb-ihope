@@ -270,6 +270,7 @@ public class CitizenWebController {
         model.addAttribute("venue", venue);
         Integer ownerId = venue.getOwnerId();
         User organizer = users.findOne(ownerId);
+        List<Meeting> meetingEntities = meetings.findAllByOrderByVenueId(venueId);
         model.addAttribute("organizer", organizer);
         if (session.getAttribute("userId") != null) {
             Integer userId = (Integer) session.getAttribute("userId");
@@ -325,6 +326,44 @@ public class CitizenWebController {
         Integer venueId = venue.getVenueId();
         return "redirect:/venue?venueId="+venueId;
     }//end of "create venue" method
+
+    @RequestMapping(path = "/venues", method = RequestMethod.GET)
+    public String viewVenuesPage (Model model, HttpSession session) {
+//        if(session.getAttribute("userId") != null) {
+        Integer userId = (Integer) session.getAttribute("userId");
+//        User user = users.findOne(userId);
+//        model.addAttribute("user", user);}
+        String errorMsg = (String) session.getAttribute("error");
+        String address = (String) session.getAttribute("address");
+        if (errorMsg != null) {
+            model.addAttribute("error" , errorMsg);
+            session.removeAttribute("error");}
+        if (userId != null) {
+            User user = users.findOne(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("address", user.getAddress());
+        } else if (address != null) { try {
+            Geo geo = addressHandler(address);
+            session.setAttribute("address", geo.getAddress());
+            model.addAttribute ("address", geo.getAddress());}catch (Exception e) {}
+        } else { try {
+            String sessionAddress = (String) session.getAttribute("address");
+            model.addAttribute ("address", sessionAddress);}catch (Exception e) {} }
+        if(session.getAttribute("address") != null) {
+//        String address = (String) session.getAttribute("address");
+        System.out.println("address in session at venues route"+" "+address);
+        model.addAttribute("address", address);}
+        List<Venue> venueEntities = (List<Venue>) venues.findAll();
+        model.addAttribute("venues", venueEntities);
+        return "venues";
+    }
+
+//    @RequestMapping(path = "/venues", method = RequestMethod.POST)
+//    public String viewVenues (Model model, HttpSession session){
+//
+//        return "redirect:/venues";
+//    }
+
 
     @RequestMapping(path = "/meeting", method = RequestMethod.GET)
     public String viewMeeting (Model model, HttpSession session, Integer meetingId) {

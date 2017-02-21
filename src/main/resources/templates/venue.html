@@ -24,10 +24,7 @@
                     <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/create-meeting">Create New Meeting</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/create-venue">Create New Venue</a>
+                    <a class="nav-link" href="/venues">View More Venues</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
@@ -62,6 +59,35 @@
         </form>
     {{/isOwner}}
     </div>
+    {{#address}}
+    <div class="row marketing">
+        <div class="col-lg-12">
+            <h4>Meetings in your area:</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Meeting Name</th>
+                    <th>Start Time</th>
+                    <th>Description</th>
+                    <th>Venue</th>
+                    <th>Organizer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#meetings}}
+                <tr>
+                    <td><a href="/meeting?meetingId={{#meetingId}}{{.}}{{/meetingId}}">{{#name}}{{.}}{{/name}}</a></td>
+                    <td>{{#time}}{{.}}{{/time}}</td>
+                    <td>{{#description}}{{.}}{{/description}}</td>
+                    <td>{{#venueId}}<a href="/venue?venueId={{.}}">View Venue</a>{{/venueId}}</td>
+                    <td>{{#organizerId}}<a href="/user?userId={{.}}">View Organizer</a>{{/organizerId}}</td>
+                </tr>
+                {{/meetings}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/address}}
     {{/venue}}
 </div>
 
