@@ -327,8 +327,8 @@ public class CitizenWebController {
         return "redirect:/venue?venueId="+venueId;
     }//end of "create venue" method
 
-    @RequestMapping(path = "/venues", method = RequestMethod.GET)
-    public String viewVenuesPage (Model model, HttpSession session) {
+    @RequestMapping(path = "/venuelist", method = RequestMethod.GET)
+    public String viewVenuesPage (Model model, HttpSession session, Integer venueId) {
 //        if(session.getAttribute("userId") != null) {
         Integer userId = (Integer) session.getAttribute("userId");
 //        User user = users.findOne(userId);
@@ -355,7 +355,7 @@ public class CitizenWebController {
         model.addAttribute("address", address);}
         List<Venue> venueEntities = (List<Venue>) venues.findAll();
         model.addAttribute("venues", venueEntities);
-        return "venues";
+        return "venuelist";
     }
 
 //    @RequestMapping(path = "/venues", method = RequestMethod.POST)

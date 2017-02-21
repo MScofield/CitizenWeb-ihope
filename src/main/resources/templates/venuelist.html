@@ -106,8 +106,8 @@
                 <thead>
                 <tr>
                     <th>Venue Name</th>
+                    <th>Web Link</th>
                     <th>Street Address</th>
-                    <th>Web Address</th>
                     <th>Twitter Handle</th>
                     <th>Venue Owner</th>
                 </tr>
@@ -116,8 +116,8 @@
                 {{#venues}}
                 <tr>
                     <td><a href="/venue?venueId={{#venueId}}{{.}}{{/venueId}}">{{#venueName}}{{.}}{{/venueName}}</a></td>
-                    <td>{{#address}}{{.}}{{/address}}</td>
                     <td>{{#url}}<a href="{{.}}">{{.}}</a>{{/url}}</td>
+                    <td>{{#address}}{{.}}{{/address}}</td>
                     <td>{{#twitter}}{{.}}{{/twitter}}</td>
                     <td>{{#ownerId}}<a href="/user?userId={{.}}">View Owner</a>{{/ownerId}}</td>
                 </tr>
