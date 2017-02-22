@@ -56,12 +56,15 @@
             {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
         </ul>
         {{#isOwner}}
-        <form action="/delete-user" method="post">
-           {{#userId}} <input type="hidden" value="{{.}}" name="userId">{{/userId}}
-            <button type="submit">Delete Account</button>
+        <form>
+            <div class="form-group">
+                {{#userId}}<input type="hidden" class="form-control" id="deleteUser" name="userId" value="{{.}}" aria-describedby="addressHelp">{{/userId}}
+                <button action="/delete-user" method="post" class="btn btn-lg btn-success" type="submit">Edit My User Profile</button>
+            </div>
         </form>
         {{/isOwner}}
     </div>
+
     {{/userToView}}
 </div>
 

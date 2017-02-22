@@ -217,7 +217,8 @@ public class CitizenWebController {
             model.addAttribute("userToView", userToView);
 //        model.addAttribute("meetings", meetingEntities);
 //        model.addAttribute("venues", venueEntities);
-            if (sessionUserId == userId) {
+            assert sessionUserId != null;
+            if (sessionUserId.equals(userId)) {
                 boolean isOwner = true;
                 model.addAttribute("isOwner", isOwner);
             }

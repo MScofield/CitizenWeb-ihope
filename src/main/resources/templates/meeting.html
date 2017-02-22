@@ -45,22 +45,29 @@
             {{#name}}<Li>Meeting Name:  {{.}}</Li>{{/name}}
             {{#date}}<Li>Meeting Date:  {{.}}</Li>{{/date}}
             {{#time}}<Li>Meeting Time:  {{.}}</Li>{{/time}}
-        </ul><br>
+        </ul>
         <ul style="list-style-type:none">
             {{#address}}<li>Address: {{.}}</li>{{/address}}
             {{#suite}}<Li>Suite:    {{.}}</li>{{/suite}}
             {{#facebook}}<li>Facebook: {{.}}</li>{{/facebook}}
             {{#url}}<li>Website: {{.}}</li>{{/url}}
             {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
-            {{#organizer}}<li>Organizer name:  {{#userName}}{{.}}{{/userName}}</li>{{/organizer}}
+        </ul>
+        <ul style="list-style-type:none">
             {{#organizer}}<li>Organizer email:   {{#email}}{{.}}{{/email}}</li>{{/organizer}}
         </ul>
-        {{#isOrganizer}}
-            <form action="/delete-meeting" method="post">
-                <input type="hidden" value="{{meetingId}}" name="meetingId">
-                <button type="submit" class="btn btn-primary">Delete Meeting</button>
-            </form>
-        {{/isOrganizer}}
+        <!--{{#isOrganizer}}-->
+            <!--<form action="/delete-meeting" method="post">-->
+                <!--<input type="hidden" value="{{meetingId}}" name="meetingId">-->
+                <!--<button type="submit" class="btn btn-primary">Delete Meeting</button>-->
+            <!--</form>-->
+        <!--{{/isOrganizer}}-->
+        <form>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="rsvpmeeting" name="rsvpmeeting" aria-describedby="addressHelp">
+                <button action="/rsvp-meeting" method="post" class="btn btn-lg btn-success" type="submit">RSVP & Save Meeting to My Calendar.</button>
+            </div>
+        </form>
     </div>
     {{/meeting}}
     {{#venue}}

@@ -106,20 +106,18 @@
                 <thead>
                 <tr>
                     <th>Meeting Name</th>
-                    <th>Start Time</th>
+                    <th>Date & Time</th>
                     <th>Description</th>
                     <th>Venue</th>
-                    <th>Organizer</th>
                 </tr>
                 </thead>
                 <tbody>
                 {{#meetings}}
                 <tr>
                     <td><a href="/meeting?meetingId={{#meetingId}}{{.}}{{/meetingId}}">{{#name}}{{.}}{{/name}}</a></td>
-                    <td>{{#time}}{{.}}{{/time}}</td>
+                    <td>{{#startTime}}{{.}}{{/startTime}}</td>
                     <td>{{#description}}{{.}}{{/description}}</td>
                     <td>{{#venueId}}<a href="/venue?venueId={{.}}">View Venue</a>{{/venueId}}</td>
-                    <td>{{#organizerId}}<a href="/user?userId={{.}}">View Organizer</a>{{/organizerId}}</td>
                 </tr>
                 {{/meetings}}
                 </tbody>
