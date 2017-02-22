@@ -35,6 +35,7 @@
         <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{#user}}
+    {{#error}}{{.}}{{/error}}
     <div class="jumbotron">
         <h2 class="display-3">Create Meeting</h2><br>
         <p>
@@ -43,7 +44,6 @@
         </p>
     </div>
     {{/user}}
-    {{#error}}{{.}}{{/error}}
     {{#user}}
     <div class="registration">
         Meeting title, Start-time and Address are required fields!
@@ -54,21 +54,21 @@
                 <div class="col-lg-4">
                 <input type="text" placeholder="Meeting Title" name="name" required><br>
                 <input type="datetime-local" placeholder="Meeting Start-Time" name="start" required><br>
-                <input type="datetime-local" placeholder="Meeting End-Time" name="end"><br>
+                <input type="text" placeholder="Full Street Address" name="address" required><br>
                 </div>
                 <div class="col-lg-4">
-                <input type="text" placeholder="Full Street Address" name="address" required><br>
                 <input type="text" placeholder="Suite Number" name="suite"><br>
                 <input type="text" placeholder="Meeting Description" name="description"><br>
+                <input type="text" placeholder="Meeting Website" name="url"><br>
                 </div>
                 <div class="col-lg-4">
-                <input type="text" placeholder="Meeting Website" name="url"><br>
                 <input type="text" placeholder="Meeting Facebook Page" name="facebook"><br>
                 <input type="text" placeholder="Meeting Twitter Handle" name="twitter"><br>
                 <input type="hidden" value={{userId}} name="organizerId">
                     <button type="submit" class="btn btn-primary">Save Meeting</button>
                 </div>
                 </div>
+            </div>
         </form>
     </div>
     {{/user}}

@@ -305,8 +305,8 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/create-venue", method = RequestMethod.POST)
     public String createVenue
-            (HttpSession session, String venueName, String buildingName, String address, String suite, String hours,
-             String website, String twitter, String facebook, String photo, Integer ownerId) throws Exception {
+            (HttpSession session, String venueName, String buildingName, String address,
+             String suite, String hours, String website, String twitter, String facebook, String photo, Integer ownerId) throws Exception {
         if (venueName != null && address != null) {
             try {
                 Geo geo = addressHandler(address);
@@ -324,8 +324,10 @@ public class CitizenWebController {
             return "redirect:/create-venue";
         }
         Venue venue = venues.findFirstByVenueName(venueName);
+        if(venue != null) {
         Integer venueId = venue.getVenueId();
-        return "redirect:/venue?venueId="+venueId;
+        return "redirect:/venue?venueId="+venueId;}
+        else { return "redirect:/"; }
     }//end of "create venue" method
 
     @RequestMapping(path = "/venuelist", method = RequestMethod.GET)
@@ -415,37 +417,25 @@ public class CitizenWebController {
     @RequestMapping(path = "/create-meeting", method = RequestMethod.POST)
     public String createMeeting(HttpSession session,
             String name, String start, String end, String address, String suite,
-            String description, String url, String photo, Integer venueId) throws Exception {
+            String description, String url, String photo) throws Exception {
         if(name != null && start != null && address != null) {
-            try {
                 Integer userId = (Integer) session.getAttribute("userId");
-                User organizer = (User) users.findOne(userId);
+                User organizer = users.findOne(userId);
                 Integer organizerId = organizer.getUserId();
                 Geo geo = addressHandler(address);
                 String standardizedAddress = geo.getAddress();
                 LocalDateTime startTime = LocalDateTime.parse(start);
-                LocalDateTime endTime = LocalDateTime.parse(end);
-//        double latitude = geo.getLatitude();
-//        double longitude = geo.getLongitude();
-//        String gplaceId = geo.getGplaceId();
-//        Venue venue = venues.findOne(venueId);
-                if (venueId == null) { try {
+                LocalDateTime endTime = startTime.plusHours(2);
+                if (venues.findFirstByAddress(standardizedAddress) != null){
                     Venue venue = venues.findFirstByAddress(standardizedAddress);
                     Integer foundVenueId = venue.getVenueId();
                     Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
                             description, url, photo, organizerId, foundVenueId);
                     meetings.save(meeting);
-                } catch (Exception e) {}
-//                } else if (venueId != null) {
-//                        Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
-//                                description, url, photo, organizerId, venueId);
-//                        meetings.save(meeting);
                 } else {
-                        Meeting meeting = new Meeting
-                                (name, startTime, endTime, standardizedAddress, suite, description, url, photo, organizerId);
-                        meetings.save(meeting);
-                }
-            }catch (Exception e) {}
+                    Meeting meeting = new Meeting(name, startTime, endTime, standardizedAddress, suite,
+                            description, url, photo, organizerId);
+                    meetings.save(meeting);}
         } else {
             session.setAttribute("error", "Required fields cannot be left blank");
             return "redirect:/create-meeting";
