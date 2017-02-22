@@ -110,7 +110,6 @@
                     <th>Venue Name</th>
                     <th>Street Address</th>
                     <th>Twitter Handle</th>
-                    <th>Venue Owner</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -119,7 +118,6 @@
                     <td><a href="/venue?venueId={{#venueId}}{{.}}{{/venueId}}">{{#venueName}}{{.}}{{/venueName}}</a></td>
                     <td>{{#address}}{{.}}{{/address}}</td>
                     <td>{{#twitter}}{{.}}{{/twitter}}</td>
-                    <td>{{#ownerId}}<a href="/user?userId={{.}}">View Owner</a>{{/ownerId}}</td>
                 </tr>
                 {{/venues}}
                 </tbody>

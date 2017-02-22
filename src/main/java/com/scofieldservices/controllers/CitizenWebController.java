@@ -376,10 +376,6 @@ public class CitizenWebController {
         model.addAttribute("date", date);
         LocalTime time = meeting.getStartTime().toLocalTime().truncatedTo(ChronoUnit.MINUTES);
         model.addAttribute("time", time);
-        if (meeting.getEndTime() != null) {
-            Integer minutes =
-                ((meeting.getEndTime()).compareTo(meeting.getStartTime()));
-            model.addAttribute("minutes", minutes);}
         if (meeting.getVenueId() != null) {
             Venue venue = venues.findOne(meeting.getVenueId());
             model.addAttribute("venue", venue);}
@@ -396,6 +392,8 @@ public class CitizenWebController {
                 model.addAttribute("isOrganizer", isOrganizer);
             }
         }
+//        Venue venue = venues.findOne(meeting.venueId);
+//        model.addAttribute("venue", venue);
 //        model.addAttribute("users", userEntities);
         return "meeting";
     }//end of "viewVenue" route
@@ -411,6 +409,8 @@ public class CitizenWebController {
             model.addAttribute("error", errorMsg);
             session.removeAttribute("error");
         }
+        List<Venue> venueEntities = (List<Venue>) venues.findAll();
+        model.addAttribute("venues", venueEntities);
         return "create-meeting";
     }
 

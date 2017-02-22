@@ -32,10 +32,15 @@ h3.text-energy {
 
 input[type="text"] {
     margin: 10px;
+    width: 100%;
 }
 
 input[type="text2"] {
 
+}
+
+input[type="select"] {
+    margin: 10px;
 }
 
 input[type="datetime-local"] {
@@ -49,9 +54,10 @@ a.btn.btn-success {
 }
 
 a.btn.btn-primary {
-    margin: 10px;
+    margin: 30px;
 }
 
 .registration {
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+    justify-content: center;
 }
