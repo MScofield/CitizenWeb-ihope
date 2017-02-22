@@ -49,10 +49,11 @@
     {{/user}}
     {{#error}}{{.}}{{/error}}
     <div class="jumbotron">
-        <h2 class="display-3">Create Account...</h2><br>
-        <p>
-            You are already logged in as: {{#user}}{{#userName}}{{.}}{{/userName}}{{/user}}...<br>
+        <h2 class="display-3">Create Account</h2><br>
+        <p>{{#user}}
+            You are already logged in as: {{#userName}}{{.}}{{/userName}}...<br>
             If you create another user account you will be logged out of this one and into that one!<br>
+            {{/user}}
         </p>
     </div>
     <div class="registration">
