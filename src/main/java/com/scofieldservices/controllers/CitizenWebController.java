@@ -463,14 +463,14 @@ public class CitizenWebController {
     @RequestMapping(path = "/delete-user", method = RequestMethod.POST)
     public String deleteUser(Integer userId)
     {
-        meetings.delete(userId);
+        users.delete(userId);
         return "redirect:/";
     }//end of route "deleteThought"
 
     @RequestMapping(path = "/delete-venue", method = RequestMethod.POST)
     public String delete(Integer venueId)
     {
-        meetings.delete(venueId);
+        venues.delete(venueId);
         return "redirect:/";
     }//end of route "deleteThought"
 
