@@ -55,7 +55,7 @@
                 </li>
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Welcome back, {{userName}}</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
 {{/user}}
 {{#error}}{{.}}{{/error}}
@@ -92,7 +92,9 @@
 <!--{{/user}}-->
 {{#address}}
     <div class="jumbotron">
-        {{.}}
+        {{#user}}<h2 class="display-3">Welcome Citizen: {{#userName}}{{.}}{{/userName}}</h2><br>{{/user}}
+        <p>Lists are currently populated using your home address:</p><br>
+        {{.}}<br>
     </div>
 {{/address}}
 <!--{{^user}}{{#address}}<button action="/" method="post" name="clear" value="true">Clear Address</button>{{/address}}{{/user}}-->

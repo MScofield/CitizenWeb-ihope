@@ -32,14 +32,16 @@
                 {{/user}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Create a new meeting</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{#user}}
     <div class="jumbotron">
-        <h2 class="display-3">create meeting...</h2>
-        <p id="loginhelp" Class="form-text text-muted">
+        <h2 class="display-3">Create Meeting...</h2><br>
+        <p>
+            Meeting owner will be:<br>
             {{#family}}{{.}}{{/family}}<br>
-            {{#firstName}}{{.}}{{/firstName}}</p><br>
+            {{#firstName}}{{.}}{{/firstName}}<br>
+        </p>
     </div>
     {{/user}}
     {{#error}}{{.}}{{/error}}

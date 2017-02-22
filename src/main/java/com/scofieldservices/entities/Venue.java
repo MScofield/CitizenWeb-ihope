@@ -16,7 +16,7 @@ import java.util.Set;
 public class Venue {
     @Id
     @GeneratedValue
-    int venueId;
+    Integer venueId;
 
     @Column(nullable = false, unique = true)
     public String venueName;

@@ -32,14 +32,15 @@
                 {{/user}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Create a new venue...</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{#user}}
         <div class="jumbotron">
         <h2 class="display-3">create venue...</h2>
-            <p id="loginhelp" Class="form-text text-muted">
+            <p>The following user will be attributed to the created venue:
                 {{#family}}{{.}}{{/family}}<br>
-                {{#firstName}}{{.}}{{/firstName}}</p><br>
+                {{#firstName}}{{.}}{{/firstName}}<br>
+            </p>
         </div>
     {{/user}}
     {{#error}}{{.}}{{/error}}

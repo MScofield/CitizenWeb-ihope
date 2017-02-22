@@ -16,7 +16,7 @@ import java.util.List;
 public interface MeetingRepository extends CrudRepository<Meeting, Integer>{
     List<Meeting> findAllByOrderByStartTimeAsc();
     List<Meeting> findAllByOrderByOrganizerId(Integer organizerId);
-    List<Meeting> findAllByOrderByVenueId(Integer venueId);
+    List<Meeting> findAllByVenueId(Integer venueId);
 //    List<Meeting> findAllByOrderByUser(User user);
 //    List<Meeting> findAllByOrderByVenueIdOrderByOrganizerId(int venueId, int organizerId);
     Meeting findFirstByName(String name);

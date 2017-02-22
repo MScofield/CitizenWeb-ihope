@@ -32,17 +32,20 @@
                 {{/user}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Individual User View for Username: {{#userToView}}{{#userName}}{{.}}{{/userName}}{{/userToView}}.</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{#error}}{{.}}{{/error}}
     {{#userToView}}
     <div class="jumbotron">
-        <h2 class="display-3">User info for:</h2>
+        <h2 class="display-3">User Info...</h2>
+        <p>This is everything we know about you {{#userName}}{{.}}{{/userName}}, <br>
+            not much really.</p>
+        <p>
         <ul style="list-style-type:none">
             {{#family}}<li>Family: {{.}}</li>{{/family}}
             {{#firstName}}<Li>Name: {{.}}</Li>{{/firstName}}
             {{#familyMembers}}<Li>More:  {{.}}</Li>{{/familyMembers}}
-        </ul><br>
+        </ul>
         <ul style="list-style-type:none">
             {{#phone}}<li>Phone: {{.}}</li>{{/phone}}
             {{#email}}<li>Email: {{.}}</li>{{/email}}

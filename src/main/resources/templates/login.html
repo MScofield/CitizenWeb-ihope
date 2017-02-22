@@ -23,15 +23,15 @@
                 </li>
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
 {{/user}}
     {{#error}}{{.}}{{/error}}
 {{^user}}
     <div class="jumbotron">
         <h2 class="display-3">Welcome back citizen!</h2>
-        <small id="loginHelp" class="form-text text-muted">
-            Nice to see you again!</small><br>
+        <p id="loginHelp" class="form-text text-muted">
+            Nice to see you again!</p><br>
     <form action="/login" method="post">
         <div class="form-group">
         <input type="text" placeholder="userName" name="userName" required>

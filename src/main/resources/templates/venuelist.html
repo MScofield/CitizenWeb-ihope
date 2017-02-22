@@ -31,7 +31,7 @@
                 {{/address}}
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>View Venues...</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{/user}}
     {{#user}}
@@ -55,7 +55,7 @@
                 </li>
             </ul>
         </nav>
-        <h3 class="text-energy">CitizenWeb</h3><h4>Logged in as: {{userName}}.  View Venues...</h4>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
     </div>
     {{/user}}
     {{#error}}{{.}}{{/error}}
@@ -92,7 +92,9 @@
     <!--{{/user}}-->
     {{#address}}
     <div class="jumbotron">
-        {{.}}
+        <h2 class="display-3">Welcome Back: {{#user}}{{#userName}}{{.}}{{/userName}}{{/user}}...</h2><br>
+        <p>Lists are currently populated using your home address:</p><br>
+        {{.}}<br>
     </div>
     {{/address}}
     <!--{{^user}}{{#address}}<button action="/" method="post" name="clear" value="true">Clear Address</button>{{/address}}{{/user}}-->
@@ -106,7 +108,6 @@
                 <thead>
                 <tr>
                     <th>Venue Name</th>
-                    <th>Web Link</th>
                     <th>Street Address</th>
                     <th>Twitter Handle</th>
                     <th>Venue Owner</th>
@@ -116,7 +117,6 @@
                 {{#venues}}
                 <tr>
                     <td><a href="/venue?venueId={{#venueId}}{{.}}{{/venueId}}">{{#venueName}}{{.}}{{/venueName}}</a></td>
-                    <td>{{#url}}<a href="{{.}}">{{.}}</a>{{/url}}</td>
                     <td>{{#address}}{{.}}{{/address}}</td>
                     <td>{{#twitter}}{{.}}{{/twitter}}</td>
                     <td>{{#ownerId}}<a href="/user?userId={{.}}">View Owner</a>{{/ownerId}}</td>

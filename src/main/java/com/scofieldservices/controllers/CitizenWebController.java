@@ -270,8 +270,9 @@ public class CitizenWebController {
         model.addAttribute("venue", venue);
         Integer ownerId = venue.getOwnerId();
         User organizer = users.findOne(ownerId);
-        List<Meeting> meetingEntities = meetings.findAllByOrderByVenueId(venueId);
         model.addAttribute("organizer", organizer);
+        List<Meeting> meetingEntities = meetings.findAllByVenueId(venueId);
+        model.addAttribute("meetings", meetingEntities);
         if (session.getAttribute("userId") != null) {
             Integer userId = (Integer) session.getAttribute("userId");
             User user = users.findOne(userId);
@@ -328,7 +329,7 @@ public class CitizenWebController {
     }//end of "create venue" method
 
     @RequestMapping(path = "/venuelist", method = RequestMethod.GET)
-    public String viewVenuesPage (Model model, HttpSession session, Integer venueId) {
+    public String viewVenuesPage (Model model, HttpSession session) {
 //        if(session.getAttribute("userId") != null) {
         Integer userId = (Integer) session.getAttribute("userId");
 //        User user = users.findOne(userId);
