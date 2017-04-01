@@ -82,6 +82,9 @@ public class CitizenWebController {
         }
     }// end if init postconstruct method
 
+//    ------------------------------------------------------------------------------
+//    User & Session handling......
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String loginUser(HttpSession session, String userName, String password) throws Exception {
         User user = users.findFirstByUserName(userName);
@@ -106,18 +109,6 @@ public class CitizenWebController {
             session.removeAttribute("error");}
         return "login";
     }
-
-//    @RequestMapping(path = "/address", method = RequestMethod.POST)
-//    public String addressOnly(HttpSession session, String address) throws Exception {
-//        if (address == null) {
-//            throw new Exception("address field cannot be blank");
-//        } else {
-//            Geo geo = addressHandler(address);
-//            session.setAttribute("address", geo.getAddress());
-//            System.out.println("address output from /address route"+" "+geo.getAddress());
-//        }
-//        return "redirect:/";
-//    }// end of address method
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public String logoutPage(HttpSession session, Model model){
@@ -151,15 +142,14 @@ public class CitizenWebController {
         return "redirect:/";
     }
 
+//    ------------------------------------------------------------------------------
+//    Home slash route
+
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpSession session, String address) throws Exception {
         Integer userId = (Integer) session.getAttribute("userId");
         String errorMsg = (String) session.getAttribute("error");
-//        model.addAttribute("address", geoInput.getAddress());
         List<Meeting> meetingEntities;
-//        List<Venue> venueEntities;
-//        List<User> userEntities;
-//        List<User> organizers;
         if (errorMsg != null) {
             model.addAttribute("error" , errorMsg);
             session.removeAttribute("error");}
@@ -174,34 +164,13 @@ public class CitizenWebController {
         } else { try {
             String sessionAddress = (String) session.getAttribute("address");
             model.addAttribute ("address", sessionAddress);}catch (Exception e) {} }
-
-//        if (venueId != null && organizerId !=null){
-//            Venue venue = venues.findOne(venueId);
-//            User organizer = users.findOne(organizerId);
-//            meetingEntities = meetings.findAllByOrderByVenueIdOrderByOrganizerId(venueId, organizerId);
-//            model.addAttribute("meetings", meetingEntities);
-//        }
-
-//            session.setAttribute("address", geo.getAddress());
-//            model.addAttribute("address", geo.getAddress());}
-//        if (venueId != null) {
-//            Venue venue = venues.findOne(venueId);
-//            meetingEntities = meetings.findAllByOrderByVenueId(venueId);
-//            model.addAttribute("meetings", meetingEntities);}
-//        if (organizerId != null) {
-//            User organizer = users.findOne(organizerId);
-//            meetingEntities = meetings.findAllByOrderByOrganizerId(organizerId);
-//            model.addAttribute("meetings", meetingEntities);}
-//        if (session.getAttribute("address") != null || session.getAttribute("user") != null){
             meetingEntities = (List<Meeting>) meetings.findAllByOrderByStartTimeAsc();
             model.addAttribute("meetings", meetingEntities);
-//        }
-//        venueEntities = venues.findAllByOrderByUser(user);
-//        userEntities = users.findAllByOrderByUser(user);
-//        model.addAttribute("venues", venueEntities);
-//        model.addAttribute("friends", userEntities);
         return "home";
     }//end of home slash method
+
+//    ------------------------------------------------------------------------------
+//    everything to do with diplaying, creating, managing user accounts....
 
     @RequestMapping(path = "/user", method = RequestMethod.GET)
     public String viewUser (Model model, HttpSession session, Integer userId) {
@@ -265,6 +234,9 @@ public class CitizenWebController {
         return "redirect:/user?userId="+userId;
     }//end of "createUser" route
 
+//    ------------------------------------------------------------------------------
+//    Everything for displaying, creating and managing meetings....
+
     @RequestMapping(path = "/venue", method = RequestMethod.GET)
     public String viewVenue (Model model, HttpSession session, Integer venueId) {
         Venue venue = venues.findOne(venueId);
@@ -283,10 +255,6 @@ public class CitizenWebController {
                 model.addAttribute("isOwner", isOwner);
             }
         }
-//        List<Meeting> meetingEntities = meetings.findAllByOrderByVenueId(venueId);
-//        List<User> userEntities = users.findAllByOrderByVenue(venue);
-//        model.addAttribute("meetings", meetingEntities);
-//        model.addAttribute("users", userEntities);
         return "venue";
     }//end of "viewVenue" route
 
@@ -362,11 +330,8 @@ public class CitizenWebController {
         return "venuelist";
     }
 
-//    @RequestMapping(path = "/venues", method = RequestMethod.POST)
-//    public String viewVenues (Model model, HttpSession session){
-//
-//        return "redirect:/venues";
-//    }
+//    ------------------------------------------------------------------------------
+//Everything to do with handling and displaying meetings....
 
 
     @RequestMapping(path = "/meeting", method = RequestMethod.GET)
@@ -384,7 +349,6 @@ public class CitizenWebController {
             Integer userId = (Integer) session.getAttribute("userId");
             User user = users.findOne(userId);
             model.addAttribute("user", user);
-//        List<User> userEntities = users.findAllByOrderByMeeting(meeting);
             try{
             User organizer = users.findOne(meeting.getOrganizerId());
             model.addAttribute("organizer", organizer);}catch (Exception e){}
@@ -393,9 +357,6 @@ public class CitizenWebController {
                 model.addAttribute("isOrganizer", isOrganizer);
             }
         }
-//        Venue venue = venues.findOne(meeting.venueId);
-//        model.addAttribute("venue", venue);
-//        model.addAttribute("users", userEntities);
         return "meeting";
     }//end of "viewVenue" route
 
@@ -446,13 +407,9 @@ public class CitizenWebController {
         return "redirect:/meeting?meetingId="+meetingId;
     }//end of "create meeting" method
 
-//    @RequestMapping(path = "/fave-meeting", method = RequestMethod.POST)
-//    public String faveMeeting(Integer meetingId, Integer userId) throws Exception {
-//        Meeting meeting = meetings.findOne(meetingId);
-//        User user = users.findOne(userId);
-//        meeting.addUser(user);
-//        return "redirect:/";
-//    }
+//    ------------------------------------------------------------------------------
+
+//    Nothing but Deletes ------------------------------------------------------
 
     @RequestMapping(path = "/delete-meeting", method = RequestMethod.POST)
     public String deleteMeeting(Integer meetingId)
@@ -475,20 +432,16 @@ public class CitizenWebController {
         return "redirect:/";
     }//end of route "deleteThought"
 
+//    ------------------------------------------------------------------------------
+//    Mapping to view front-ent test page.....
+
     @RequestMapping(path = "/test", method = RequestMethod.GET)
     public String test(){
         return "/test";
     }
 
-//    @RequestMapping(path = "/edit-meeting", method = RequestMethod.POST)
-//    public String editMeeting(int meetingId, String descriptionText) throws Exception {
-//        Meeting meeting = meetings.findOne(meetingId);
-//        if (descriptionText != null){
-//        thought.description = descriptionText;
-//        thoughts.save(thought);
-//        }else throw new Exception("description field cannot be blank");
-//        return "redirect:/";
-//    }// end of route "edit"
+ //    ------------------------------------------------------------------------------
+
 
     public Geo addressHandler (String address) throws Exception {
         Geo geo = new Geo();
@@ -505,7 +458,25 @@ public class CitizenWebController {
         return geo;
     }//end of "addresshandler" route
 
-//    public void photoHandler
+//Wishlist routes from here on down
+//    @RequestMapping(path = "/fave-meeting", method = RequestMethod.POST)
+//    public String faveMeeting(Integer meetingId, Integer userId) throws Exception {
+//        Meeting meeting = meetings.findOne(meetingId);
+//        User user = users.findOne(userId);
+//        meeting.addUser(user);
+//        return "redirect:/";
+//    }
+
+//    @RequestMapping(path = "/edit-meeting", method = RequestMethod.POST)
+//    public String editMeeting(int meetingId, String descriptionText) throws Exception {
+//        Meeting meeting = meetings.findOne(meetingId);
+//        if (descriptionText != null){
+//        thought.description = descriptionText;
+//        thoughts.save(thought);
+//        }else throw new Exception("description field cannot be blank");
+//        return "redirect:/";
+//    }// end of route "edit"
+
 
 }// end of controller class
 

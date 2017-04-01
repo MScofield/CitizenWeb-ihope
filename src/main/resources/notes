@@ -163,3 +163,29 @@ Something else
         https://catalog.data.gov/dataset?q=-aapi+api+OR++res_format%3Aapi&ext_location=Minneapolis%2C+MN+%2855401%29&organization_type=State+Government&sort=views_recent+desc&ext_prev_extent=&ext_bbox=-93.2843%2C44.9766%2C-93.2551%2C44.9926#
 
         https://www.openstreetmap.org/export#map=16/45.1822/-93.2454
+
+
+//        if (venueId != null && organizerId !=null){
+//            Venue venue = venues.findOne(venueId);
+//            User organizer = users.findOne(organizerId);
+//            meetingEntities = meetings.findAllByOrderByVenueIdOrderByOrganizerId(venueId, organizerId);
+//            model.addAttribute("meetings", meetingEntities);
+//        }
+
+//            session.setAttribute("address", geo.getAddress());
+//            model.addAttribute("address", geo.getAddress());}
+//        if (venueId != null) {
+//            Venue venue = venues.findOne(venueId);
+//            meetingEntities = meetings.findAllByOrderByVenueId(venueId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (organizerId != null) {
+//            User organizer = users.findOne(organizerId);
+//            meetingEntities = meetings.findAllByOrderByOrganizerId(organizerId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (session.getAttribute("address") != null || session.getAttribute("user") != null){
+
+//        }
+//        venueEntities = venues.findAllByOrderByUser(user);
+//        userEntities = users.findAllByOrderByUser(user);
+//        model.addAttribute("venues", venueEntities);
+//        model.addAttribute("friends", userEntities);
