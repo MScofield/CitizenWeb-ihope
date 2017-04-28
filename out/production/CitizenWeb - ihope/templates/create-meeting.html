@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Meeting</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                {{#user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+                </li>
+                {{/user}}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/create-meeting">Create New Meeting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/venuelist">View Venues</a>
+                </li>
+                {{#user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {{/user}}
+            </ul>
+        </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+    {{#user}}
+    {{#error}}{{.}}{{/error}}
+    <div class="jumbotron">
+        <h2 class="display-3">Create Meeting</h2><br>
+        <p>
+            Meeting owner will be:<br>
+            {{#userName}}{{.}}{{/userName}}<br>
+        </p>
+    </div>
+    {{/user}}
+    {{#user}}
+    <div class="registration">
+        Meeting title, Start-time and Address are required fields!
+        <form action="/create-meeting" method="post">
+            <div class="form-group">
+                <p id="emailHelp" class="form-text text-muted">
+                    If your meeting address is not in the drop-down -
+                    please <a href="/create-venue">create the venue</a> first.</p>
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                    <select name="address">
+                            <option selected disabled>Venue</option>
+                            {{#venues}}
+                            <option value="{{address}}">{{address}}</option>
+                            {{/venues}}
+                        </select>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <input type="text" placeholder="Meeting Title" name="name" required><br>
+                        <input type="datetime-local" placeholder="Meeting Start-Time" name="start" required><br>
+                        <input type="text" placeholder="Suite Number" name="suite"><br>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" placeholder="Meeting Website" name="url"><br>
+                        <input type="text" placeholder="Meeting Facebook Page" name="facebook"><br>
+                        <input type="text" placeholder="Meeting Twitter Handle" name="twitter"><br>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="text" placeholder="Meeting Description" name="description"><br>
+                        <input type="hidden" value={{userId}} name="organizerId">
+                        <button type="submit" class="btn btn-primary">Save Meeting</button>
+                    </div>
+                    <div class="col-lg-3">
+                    </div>
+                </div>
+                <br>
+            </div>
+        </form>
+    </div>
+    {{/user}}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script src="home.js"></script>
+</body>
+</html>

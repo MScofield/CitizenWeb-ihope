@@ -53,29 +53,10 @@ public class CitizenWebController {
     public void init() throws PasswordStorage.CannotPerformOperationException {
         if(users.count()==0) {
             User user = new User();
-            user.userName = "StillSprings";
-            user.family = "Scofield";
-            user.firstName = "Matthew";
-            user.password = PasswordStorage.createHash("nonStop");
-            user.familyMembers = "Jen, Angelia";
-            user.phone = "651-705-6511";
-            user.email = "matthewgscofield@outlook.com";
-            user.address = "3804 Highcrest Rd NE, Minneapolis, MN 55421";
-            user.suite = "204";
-            user.latitude = 45.037546;
-            user.longitude = -93.208796;
-            user.twitter = "@scofieldcodes";
-            user.facebook = "MGScofield";
-            user.url = "http://www.scofieldunlimited.com/";
-            user.photo = "/picture.jpg";
-            user.isMaster = false;
-            users.save(user);
-            user = new User();
             user.userName = "Master";
             user.family = "Master";
             user.password = PasswordStorage.createHash("1850");
             user.email = "matthew@scofieldunlimited.com";
-            user.address = "11691 Polk St NE, Blaine, MN 55434";
             user.isMaster = true;
             users.save(user);
 
@@ -301,10 +282,7 @@ public class CitizenWebController {
 
     @RequestMapping(path = "/venuelist", method = RequestMethod.GET)
     public String viewVenuesPage (Model model, HttpSession session) {
-//        if(session.getAttribute("userId") != null) {
         Integer userId = (Integer) session.getAttribute("userId");
-//        User user = users.findOne(userId);
-//        model.addAttribute("user", user);}
         String errorMsg = (String) session.getAttribute("error");
         String address = (String) session.getAttribute("address");
         if (errorMsg != null) {
@@ -322,7 +300,6 @@ public class CitizenWebController {
             String sessionAddress = (String) session.getAttribute("address");
             model.addAttribute ("address", sessionAddress);}catch (Exception e) {} }
         if(session.getAttribute("address") != null) {
-//        String address = (String) session.getAttribute("address");
         System.out.println("address in session at venues route"+" "+address);
         model.addAttribute("address", address);}
         List<Venue> venueEntities = (List<Venue>) venues.findAll();
@@ -447,13 +424,9 @@ public class CitizenWebController {
         Geo geo = new Geo();
         GeoApiContext context = new GeoApiContext().setApiKey(googleApiKey);
         GeocodingResult[] results =  GeocodingApi.geocode(context, address).await();
-        System.out.println(results[0].formattedAddress);
         geo.setAddress(results[0].formattedAddress);
-        System.out.println(results[0].geometry.location.lat);
         geo.setLatitude(results[0].geometry.location.lat);
-        System.out.println(results[0].geometry.location.lng);
         geo.setLongitude(results[0].geometry.location.lng);
-        System.out.println(results[0].placeId);
         geo.setGplaceId(results[0].placeId);
         return geo;
     }//end of "addresshandler" route

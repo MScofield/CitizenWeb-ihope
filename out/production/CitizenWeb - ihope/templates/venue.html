@@ -4,14 +4,101 @@
     <meta charset="UTF-8">
     <title>Venue</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                {{#venue}}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/venue?venueId={{venueId}}">View Venue</a>
+                </li>
+                {{/venue}}
+                {{#user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/venuelist">View More Venues</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {{/user}}
+            </ul>
+        </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+    {{#error}}{{.}}{{/error}}
+    {{#venue}}
+    <div class="jumbotron">
+    <h2 class="display-3">Individual Venue</h2>
+    <ul style="list-style-type:none">
+        {{#venueName}}<li>Venue Name:   {{.}}</li>{{/venueName}}
+        {{#address}}<li>Address:    {{.}}</li>{{/address}}
+        {{#suite}}<li>Suite:    {{.}}</li>{{/suite}}
+    </ul>
+    <ul style="list-style-type:none">
+        {{#url}}<li><a href="{{.}}">Website:    {{.}}</a></li>{{/url}}
+        {{#facebook}}<li>Facebook:  {{.}}</li>{{/facebook}}
+        {{#twitter}}<li>Twitter:    {{.}}</li>{{/twitter}}
+    </ul>
+    <ul style="list-style-type:none">
+        {{#organizer}}<li>Owner name:   {{#userName}}{{.}}{{/userName}}</li>{{/organizer}}
+        {{#organizer}}<li>Owner email:  {{#email}}{{.}}{{/email}}</li>{{/organizer}}
+    </ul>
+    <!--{{#isOwner}}-->
+        <!--<form action="/delete-venue" method="post">-->
+            <!--<input type="hidden" value="{{venueId}}" name="venueId">-->
+            <!--<button type="submit">Delete Venue</button>-->
+        <!--</form>-->
+    <!--{{/isOwner}}-->
+        <form>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="newmeeting" name="newmeeting" aria-describedby="addressHelp">
+                <button action="/create-meeting" method="post" class="btn btn-lg btn-success" type="submit">Create Meeting for this Venue.</button>
+            </div>
+        </form>
+    </div>
+    {{#address}}
+    <div class="row marketing">
+        <div class="col-lg-12">
+            <h4>Meetings at this venue:</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Meeting Name</th>
+                    <th>Date Time</th>
+                    <th>Description</th>
+                    <th>Organizer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#meetings}}
+                <tr>
+                    <td><a href="/meeting?meetingId={{#meetingId}}{{.}}{{/meetingId}}">{{#name}}{{.}}{{/name}}</a></td>
+                    <td>{{#startTime}}{{.}}{{/startTime}}</td>
+                    <td>{{#description}}{{.}}{{/description}}</td>
+                    <td>{{#organizerId}}<a href="/user?userId={{.}}">View Organizer</a>{{/organizerId}}</td>
+                </tr>
+                {{/meetings}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/address}}
+    {{/venue}}
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="meeting.js"></script>
+<script src="home.js"></script>
 </body>
 </html>

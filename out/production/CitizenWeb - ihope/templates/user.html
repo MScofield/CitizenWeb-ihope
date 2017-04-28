@@ -4,14 +4,74 @@
     <meta charset="UTF-8">
     <title>User</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                {{#userToView}}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/user?userId={{userId}}">Profile</a>
+                </li>
+                {{/userToView}}
+                {{#user}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/create-meeting">Create New Meeting</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/create-venue">Create New Venue</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {{/user}}
+            </ul>
+        </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+    {{#error}}{{.}}{{/error}}
+    {{#userToView}}
+    <div class="jumbotron">
+        <h2 class="display-3">User Info</h2>
+        <p>This is everything we know about you {{#userName}}{{.}}{{/userName}}, <br>
+            not much really:</p>
+        <p>
+        <ul style="list-style-type:none">
+            {{#family}}<li>Family: {{.}}</li>{{/family}}
+            {{#firstName}}<Li>Name: {{.}}</Li>{{/firstName}}
+            {{#familyMembers}}<Li>More:  {{.}}</Li>{{/familyMembers}}
+        </ul>
+        <ul style="list-style-type:none">
+            {{#phone}}<li>Phone: {{.}}</li>{{/phone}}
+            {{#email}}<li>Email: {{.}}</li>{{/email}}
+            {{#address}}<li>Address: {{.}}</li>{{/address}}
+            {{#suite}}<li>Suite: {{.}}</li>{{/suite}}
+            {{#facebook}}<li>Facebook: {{.}}</li>{{/facebook}}
+            {{#url}}<li>Website: {{.}}</li>{{/url}}
+            {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
+        </ul>
+        {{#isOwner}}
+        <form>
+            <div class="form-group">
+                {{#userId}}<input type="hidden" class="form-control" id="deleteUser" name="userId" value="{{.}}" aria-describedby="addressHelp">{{/userId}}
+                <button action="/delete-user" method="post" class="btn btn-lg btn-success" type="submit">Edit My User Profile</button>
+            </div>
+        </form>
+        {{/isOwner}}
+    </div>
+
+    {{/userToView}}
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="user.js"></script>
+<script src="home.js"></script>
 </body>
 </html>

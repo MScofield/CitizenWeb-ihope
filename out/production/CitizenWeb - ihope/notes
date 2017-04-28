@@ -125,3 +125,67 @@ Something else
 //        return "redirect:/";
 //    }// end of login method
 
+<!--<input type="email" class="form-control" id="input-email" aria-describedby="emailHelp" placeholder="Enter email">-->
+                <!--<small id="emailHelp" class="form-text text-muted"> We'll never share your information with anyone else.</small>-->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+
+
+        <!--<form action="/" method="post">-->
+            <!--<select name="venue">-->
+                <!--<option selected disabled>Venue</option>-->
+                <!--{{#venues}}-->
+                <!--<option value="{{name}}">{{name}}</option>-->
+                <!--{{/venues}}-->
+            <!--</select>-->
+            <!--<select name="organizer">-->
+                <!--<option selected disabled>Organizer</option>-->
+                <!--{{#organizers}}-->
+                <!--<option value="{{name}}">{{name}}</option>-->
+                <!--{{/organizers}}-->
+            <!--</select>-->
+            <!--<select name="week">-->
+                <!--<option selected disabled>Dates</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">This week</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Next week</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Two weeks out</option>-->
+                <!--<option value="get t from Meeting where t.localDateTime is ..">Later</option>-->
+            <!--</select>-->
+            <!--<button type="submit">Filter</button>-->
+        <!--</form>-->
+        <!--<br>-->
+        <!--<form action="/" method="get">-->
+            <!--<input type="text" placeholder="Search Meetings" name="search">-->
+            <!--<button type="submit">Search</button>-->
+        <!--</form>-->
+
+        https://catalog.data.gov/dataset?q=-aapi+api+OR++res_format%3Aapi&ext_location=Minneapolis%2C+MN+%2855401%29&organization_type=State+Government&sort=views_recent+desc&ext_prev_extent=&ext_bbox=-93.2843%2C44.9766%2C-93.2551%2C44.9926#
+
+        https://www.openstreetmap.org/export#map=16/45.1822/-93.2454
+
+
+//        if (venueId != null && organizerId !=null){
+//            Venue venue = venues.findOne(venueId);
+//            User organizer = users.findOne(organizerId);
+//            meetingEntities = meetings.findAllByOrderByVenueIdOrderByOrganizerId(venueId, organizerId);
+//            model.addAttribute("meetings", meetingEntities);
+//        }
+
+//            session.setAttribute("address", geo.getAddress());
+//            model.addAttribute("address", geo.getAddress());}
+//        if (venueId != null) {
+//            Venue venue = venues.findOne(venueId);
+//            meetingEntities = meetings.findAllByOrderByVenueId(venueId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (organizerId != null) {
+//            User organizer = users.findOne(organizerId);
+//            meetingEntities = meetings.findAllByOrderByOrganizerId(organizerId);
+//            model.addAttribute("meetings", meetingEntities);}
+//        if (session.getAttribute("address") != null || session.getAttribute("user") != null){
+
+//        }
+//        venueEntities = venues.findAllByOrderByUser(user);
+//        userEntities = users.findAllByOrderByUser(user);
+//        model.addAttribute("venues", venueEntities);
+//        model.addAttribute("friends", userEntities);

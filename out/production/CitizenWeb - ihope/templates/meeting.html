@@ -4,14 +4,101 @@
     <meta charset="UTF-8">
     <title>Meeting</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="home.css">
 </head>
 <body>
+<div class="container">
+    <div class="header clearfix">
+    <nav>
+        <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+            </li>
+            {{#meeting}}
+            <li class="nav-item">
+                <a class="nav-link active" href="/meeting?meetingId={{meetingId}}">View Meeting</a>
+            </li>
+            {{/meeting}}
+            {{#user}}
+            <li class="nav-item">
+                <a class="nav-link" href="/user?userId={{userId}}">My Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/create-meeting">Create New Meeting</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/venuelist">View Venues</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            {{/user}}
+        </ul>
+    </nav>
+        <h3 class="text-energy">CitizenWeb</h3><h4>The network for local civic functions.</h4>
+    </div>
+{{#error}}{{.}}{{/error}}
+    {{#meeting}}
+    <div class="jumbotron">
+        <h2 class="display-3">Show Meeting</h2>
+        <ul style="list-style-type:none">
+            {{#name}}<Li>Meeting Name:  {{.}}</Li>{{/name}}
+            {{#date}}<Li>Meeting Date:  {{.}}</Li>{{/date}}
+            {{#time}}<Li>Meeting Time:  {{.}}</Li>{{/time}}
+        </ul>
+        <ul style="list-style-type:none">
+            {{#address}}<li>Address: {{.}}</li>{{/address}}
+            {{#suite}}<Li>Suite:    {{.}}</li>{{/suite}}
+            {{#facebook}}<li>Facebook: {{.}}</li>{{/facebook}}
+            {{#url}}<li>Website: {{.}}</li>{{/url}}
+            {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
+        </ul>
+        <ul style="list-style-type:none">
+            {{#organizer}}<li>Organizer email:   {{#email}}{{.}}{{/email}}</li>{{/organizer}}
+        </ul>
+        <!--{{#isOrganizer}}-->
+            <!--<form action="/delete-meeting" method="post">-->
+                <!--<input type="hidden" value="{{meetingId}}" name="meetingId">-->
+                <!--<button type="submit" class="btn btn-primary">Delete Meeting</button>-->
+            <!--</form>-->
+        <!--{{/isOrganizer}}-->
+        <form>
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="rsvpmeeting" name="rsvpmeeting" aria-describedby="addressHelp">
+                <button action="/rsvp-meeting" method="post" class="btn btn-lg btn-success" type="submit">RSVP & Save Meeting to My Calendar.</button>
+            </div>
+        </form>
+    </div>
+    {{/meeting}}
+    {{#venue}}
+    <div class="row marketing">
+        <div class="col-lg-12">
+            <h4>Venue for this meeting::</h4>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Venue Name</th>
+                    <th>Street Address</th>
+                    <th>Twitter Handle</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><a href="/venue?venueId={{#venueId}}{{.}}{{/venueId}}">{{#venueName}}{{.}}{{/venueName}}</a></td>
+                    <td>{{#address}}{{.}}{{/address}}</td>
+                    <td>{{#twitter}}{{.}}{{/twitter}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/venue}}
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script src="meeting.js"></script>
+<script src="home.js"></script>
 </body>
 </html>
