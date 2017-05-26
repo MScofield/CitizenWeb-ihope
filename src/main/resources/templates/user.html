@@ -55,14 +55,14 @@
             {{#url}}<li>Website: {{.}}</li>{{/url}}
             {{#twitter}}<li>Twitter: {{.}}</li>{{/twitter}}
         </ul>
-        {{#isOwner}}
-        <form>
-            <div class="form-group">
-                {{#userId}}<input type="hidden" class="form-control" id="deleteUser" name="userId" value="{{.}}" aria-describedby="addressHelp">{{/userId}}
-                <button action="/delete-user" method="post" class="btn btn-lg btn-success" type="submit">Edit My User Profile</button>
-            </div>
-        </form>
-        {{/isOwner}}
+        <!--{{#isOwner}}-->
+        <!--<form>-->
+            <!--<div class="form-group">-->
+                <!--{{#userId}}<input type="hidden" class="form-control" id="deleteUser" name="userId" value="{{.}}" aria-describedby="addressHelp">{{/userId}}-->
+                <!--<button action="/delete-user" method="post" class="btn btn-lg btn-success" type="submit">Edit My User Profile</button>-->
+            <!--</div>-->
+        <!--</form>-->
+        <!--{{/isOwner}}-->
     </div>
 
     {{/userToView}}
